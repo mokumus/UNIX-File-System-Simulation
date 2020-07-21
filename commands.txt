@@ -1,0 +1,36 @@
+PART 2:
+
+make command > make all
+File system creation test runs:
+1) ./makeFileSystem 4 400 mySystem.dat      ; Correct input
+2) ./makeFileSystem 1 1000 mySystem.dat     ; Too many inodes for given block size, bitmap failure
+3) ./makeFileSystem 1 900 mySystem.dat      ; Correct input
+4) ./makeFileSystem 100 900 mySystem.dat    ; Correct input
+5) ./makeFileSystem 200 10 mySystem.dat     ; Block size can't be larger than 100KB
+6) ./makeFileSystem 10 0 mySystem.dat       ; Number of inodes can't be less than 1
+
+
+==============================================================================================================================
+
+
+PART 3:
+make command > make all
+
+Working commands, execute in order:
+
+In part 2 create a file with "./makeFileSystem 4 400 mySystem.dat" to generate same output
+or use the "mySystem.dat" in the folder
+
+1) ./fileSystemOper mySystem.dat dumpe2fs           ; Display bitmap, used inodes and block content, very long output
+2) ./fileSystemOper mySystem.dat rmdir "/kek"       ; No such directory error, havent create yet
+3) ./fileSystemOper mySystem.dat mkdir "/kek"       ; Create directory and print inode assigned to it
+4) ./fileSystemOper mySystem.dat mkdir "/kek/tek"   ; Create directory under /kek
+5) ./fileSystemOper mySystem.dat list "/kek/tek"    ; Prints inode of "kek/tek" size and last modified, no files
+6) ./fileSystemOper mySystem.dat list "/"           ; Prints /root directory, "."" and ".." are added in part 2 for sanity 
+7) ./fileSystemOper mySystem.dat dumpe2fs           ; Prints bitmap, 3 inodes(kek, tek and root),
+                                                    ; check block 21-22-23 to see what changed
+8) ./fileSystemOper mySystem.dat mkdir "/lol/tek"   ; No such directory: lol error
+9) ./fileSystemOper mySystem.dat fsck               ; Prints used/free blocks as in textbook
+10)./fileSystemOper mySystem.dat rmdir "/kek"
+11)./fileSystemOper mySystem.dat dumpe2fs 
+
